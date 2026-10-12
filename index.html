@@ -1,0 +1,93 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Live Stock Market Dashboard</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+    <div>
+      <small>MARKET MONITOR <span class="eyebrow-dot"></span> US EQUITIES</small>
+      <h1>Live Stock Market Dashboard</h1>
+      <p>Real-time US stock prices streamed from a live market-data API.</p>
+    </div>
+    <div id="status">? Disconnected</div>
+  </header>
+
+  <main>
+    <section class="controls">
+      <div class="key-field">
+        <label for="key">Finnhub API Key</label>
+        <input id="key" type="password" placeholder="Paste your free API key">
+      </div>
+      <div class="symbol-field">
+        <label for="symbol">Add to watchlist</label>
+        <input id="symbol" placeholder="AAPL" maxlength="12">
+      </div>
+      <button id="connect" class="button-primary">Connect Live</button>
+      <button id="add" class="button-secondary">+ Add symbol</button>
+    </section>
+
+    <section class="notice"><span class="notice-mark"></span><span><b>MARKET DATA</b> Paste a valid Finnhub key for real market data, or use the built-in demo feed while testing.</span></section>
+
+    <section class="cards">
+      <div><span>Tracked Stocks</span><b id="count">5</b></div>
+      <div><span>Gainers</span><b id="gainers">?</b></div>
+      <div><span>Losers</span><b id="losers">?</b></div>
+      <div><span>Avg Change</span><b id="avg">?</b></div>
+    </section>
+
+    <section class="panel watch-panel">
+      <div class="section-heading">
+        <div><span class="section-kicker">YOUR UNIVERSE</span><h2>Live Market Watch</h2></div>
+        <label class="search-box"><span aria-hidden="true">⌕</span><input id="search" type="search" placeholder="Filter symbols" aria-label="Filter watchlist symbols"></label>
+      </div>
+      <div class="tablewrap">
+        <table>
+          <thead>
+            <tr>
+              <th><button class="sort-button" data-sort="symbol">Symbol <span></span></button></th>
+              <th><button class="sort-button" data-sort="price">Price <span></span></button></th>
+              <th><button class="sort-button" data-sort="change">Change <span></span></button></th>
+              <th><button class="sort-button" data-sort="cp">Change % <span></span></button></th>
+              <th><button class="sort-button" data-sort="high">High <span></span></button></th>
+              <th><button class="sort-button" data-sort="low">Low <span></span></button></th>
+              <th><button class="sort-button" data-sort="volume">Volume <span></span></button></th>
+              <th><button class="sort-button" data-sort="time">Updated <span></span></button></th>
+              <th aria-label="Actions"></th>
+            </tr>
+          </thead>
+          <tbody id="body"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="two">
+      <section class="panel chart-panel">
+        <div class="section-heading chart-heading">
+          <div><span class="section-kicker">INTRADAY PERFORMANCE</span><h2>Live Price Chart</h2></div>
+          <div class="range-controls" role="group" aria-label="Chart time range">
+            <button class="range-button is-active" data-range="all" aria-pressed="true">ALL</button>
+            <button class="range-button" data-range="1h" aria-pressed="false">1H</button>
+            <button class="range-button" data-range="15m" aria-pressed="false">15M</button>
+          </div>
+        </div>
+        <div class="chart-summary"><p id="chartTitle">AAPL</p><span id="chartPrice">Waiting for quote</span></div>
+        <div class="chart-wrap"><canvas id="chart"></canvas></div>
+      </section>
+
+      <section class="panel movers-panel">
+        <div class="section-heading"><div><span class="section-kicker">BIGGEST MOVES</span><h2>Market Movers</h2></div></div>
+        <div id="movers"></div>
+      </section>
+    </section>
+
+    <footer><span>EDUCATIONAL PROJECT</span><span>Market data is provider-dependent · Not investment advice</span></footer>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
