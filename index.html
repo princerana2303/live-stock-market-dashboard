@@ -6,91 +6,296 @@
   <title>Live Stock Market Dashboard</title>
   <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
+
   <header>
     <div>
-      <small>MARKET MONITOR <span class="eyebrow-dot"></span> US EQUITIES</small>
+      <small>
+        MARKET MONITOR <span class="eyebrow-dot"></span> US EQUITIES
+      </small>
+
       <h1>Live Stock Market Dashboard</h1>
-      <p>Real-time US stock prices streamed from a live market-data API.</p>
+
+      <p>
+        Real-time US stock prices streamed from a live market-data API.
+      </p>
     </div>
-    <div id="status">? Disconnected</div>
+
+    <div id="status">● Live</div>
   </header>
 
   <main>
+
+    <!-- Controls -->
     <section class="controls">
+
       <div class="api-status-text">
         <span>MARKET DATA</span>
-        <p>Live market data is securely powered by the server-side market API.</p>
-       </div>
+        <p>
+          Live market data is securely powered by the server-side market API.
+        </p>
+      </div>
+
       <div class="symbol-field">
         <label for="symbol">Add to watchlist</label>
-        <input id="symbol" placeholder="AAPL" maxlength="12">
+        <input
+          id="symbol"
+          placeholder="AAPL"
+          maxlength="12"
+          autocomplete="off"
+        >
       </div>
-      <button id="connect" class="button-primary">Connect Live</button>
-      <button id="add" class="button-secondary">+ Add symbol</button>
+
+      <button id="add" class="button-secondary">
+        + Add symbol
+      </button>
+
     </section>
 
-   <section class="notice">
-  <span class="notice-mark"></span>
-  <span><b>LIVE DATA</b> Market data is securely delivered through the server-side API.</span>
-</section>
 
+    <!-- Secure API notice -->
+    <section class="notice">
+      <span class="notice-mark"></span>
+
+      <span>
+        <b>LIVE DATA</b>
+        Market data is securely delivered through the server-side API.
+      </span>
+    </section>
+
+
+    <!-- KPI Cards -->
     <section class="cards">
-      <div><span>Tracked Stocks</span><b id="count">5</b></div>
-      <div><span>Gainers</span><b id="gainers">?</b></div>
-      <div><span>Losers</span><b id="losers">?</b></div>
-      <div><span>Avg Change</span><b id="avg">?</b></div>
+
+      <div>
+        <span>Tracked Stocks</span>
+        <b id="count">5</b>
+      </div>
+
+      <div>
+        <span>Gainers</span>
+        <b id="gainers">?</b>
+      </div>
+
+      <div>
+        <span>Losers</span>
+        <b id="losers">?</b>
+      </div>
+
+      <div>
+        <span>Avg Change</span>
+        <b id="avg">?</b>
+      </div>
+
     </section>
 
+
+    <!-- Live Market Watch -->
     <section class="panel watch-panel">
+
       <div class="section-heading">
-        <div><span class="section-kicker">YOUR UNIVERSE</span><h2>Live Market Watch</h2></div>
-        <label class="search-box"><span aria-hidden="true">⌕</span><input id="search" type="search" placeholder="Filter symbols" aria-label="Filter watchlist symbols"></label>
+
+        <div>
+          <span class="section-kicker">YOUR UNIVERSE</span>
+          <h2>Live Market Watch</h2>
+        </div>
+
+        <label class="search-box">
+          <span aria-hidden="true">⌕</span>
+
+          <input
+            id="search"
+            type="search"
+            placeholder="Filter symbols"
+            aria-label="Filter watchlist symbols"
+          >
+        </label>
+
       </div>
+
+
       <div class="tablewrap">
+
         <table>
+
           <thead>
             <tr>
-              <th><button class="sort-button" data-sort="symbol">Symbol <span></span></button></th>
-              <th><button class="sort-button" data-sort="price">Price <span></span></button></th>
-              <th><button class="sort-button" data-sort="change">Change <span></span></button></th>
-              <th><button class="sort-button" data-sort="cp">Change % <span></span></button></th>
-              <th><button class="sort-button" data-sort="high">High <span></span></button></th>
-              <th><button class="sort-button" data-sort="low">Low <span></span></button></th>
-              <th><button class="sort-button" data-sort="volume">Volume <span></span></button></th>
-              <th><button class="sort-button" data-sort="time">Updated <span></span></button></th>
+
+              <th>
+                <button class="sort-button" data-sort="symbol">
+                  Symbol <span></span>
+                </button>
+              </th>
+
+              <th>
+                <button class="sort-button" data-sort="price">
+                  Price <span></span>
+                </button>
+              </th>
+
+              <th>
+                <button class="sort-button" data-sort="change">
+                  Change <span></span>
+                </button>
+              </th>
+
+              <th>
+                <button class="sort-button" data-sort="cp">
+                  Change % <span></span>
+                </button>
+              </th>
+
+              <th>
+                <button class="sort-button" data-sort="high">
+                  High <span></span>
+                </button>
+              </th>
+
+              <th>
+                <button class="sort-button" data-sort="low">
+                  Low <span></span>
+                </button>
+              </th>
+
+              <th>
+                <button class="sort-button" data-sort="volume">
+                  Volume <span></span>
+                </button>
+              </th>
+
+              <th>
+                <button class="sort-button" data-sort="time">
+                  Updated <span></span>
+                </button>
+              </th>
+
               <th aria-label="Actions"></th>
+
             </tr>
           </thead>
+
           <tbody id="body"></tbody>
+
         </table>
+
       </div>
+
     </section>
 
+
+    <!-- Chart + Market Movers -->
     <section class="two">
+
+
+      <!-- Live Price Chart -->
       <section class="panel chart-panel">
+
         <div class="section-heading chart-heading">
-          <div><span class="section-kicker">INTRADAY PERFORMANCE</span><h2>Live Price Chart</h2></div>
-          <div class="range-controls" role="group" aria-label="Chart time range">
-            <button class="range-button is-active" data-range="all" aria-pressed="true">ALL</button>
-            <button class="range-button" data-range="1h" aria-pressed="false">1H</button>
-            <button class="range-button" data-range="15m" aria-pressed="false">15M</button>
+
+          <div>
+            <span class="section-kicker">
+              INTRADAY PERFORMANCE
+            </span>
+
+            <h2>Live Price Chart</h2>
           </div>
+
+
+          <div
+            class="range-controls"
+            role="group"
+            aria-label="Chart time range"
+          >
+
+            <button
+              class="range-button is-active"
+              data-range="all"
+              aria-pressed="true"
+            >
+              ALL
+            </button>
+
+            <button
+              class="range-button"
+              data-range="1h"
+              aria-pressed="false"
+            >
+              1H
+            </button>
+
+            <button
+              class="range-button"
+              data-range="15m"
+              aria-pressed="false"
+            >
+              15M
+            </button>
+
+          </div>
+
         </div>
-        <div class="chart-summary"><p id="chartTitle">AAPL</p><span id="chartPrice">Waiting for quote</span></div>
-        <div class="chart-wrap"><canvas id="chart"></canvas></div>
+
+
+        <div class="chart-summary">
+
+          <p id="chartTitle">AAPL</p>
+
+          <span id="chartPrice">
+            Waiting for quote
+          </span>
+
+        </div>
+
+
+        <div class="chart-wrap">
+          <canvas id="chart"></canvas>
+        </div>
+
       </section>
 
+
+      <!-- Market Movers -->
       <section class="panel movers-panel">
-        <div class="section-heading"><div><span class="section-kicker">BIGGEST MOVES</span><h2>Market Movers</h2></div></div>
+
+        <div class="section-heading">
+
+          <div>
+            <span class="section-kicker">
+              BIGGEST MOVES
+            </span>
+
+            <h2>Market Movers</h2>
+          </div>
+
+        </div>
+
         <div id="movers"></div>
+
       </section>
+
     </section>
 
-    <footer><span>EDUCATIONAL PROJECT</span><span>Market data is provider-dependent · Not investment advice</span></footer>
+
+    <!-- Footer -->
+    <footer>
+
+      <span>EDUCATIONAL PROJECT</span>
+
+      <span>
+        Market data is provider-dependent · Not investment advice
+      </span>
+
+    </footer>
+
   </main>
 
+
+  <!-- Chart.js -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <!-- Application JavaScript -->
   <script src="app.js"></script>
+
 </body>
 </html>
